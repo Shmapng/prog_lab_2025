@@ -1,4 +1,6 @@
 #include <iostream>
+#include <limits>
+
 
 int main() {
     // unsigned char для высоты (1..255)
@@ -16,10 +18,15 @@ int main() {
     std::cout << "B: ";
     std::cin >> B;
 
-    // Вывод названий типов и их размерности в битах
-    std::cout << "\nTip: unsigned char, razmer: " << sizeof(unsigned char) * 8 << " bit\n";
-    std::cout << "Tip: unsigned short, razmer: " << sizeof(unsigned short) * 8 << " bit\n";
-    std::cout << "Tip: float, razmer: " << sizeof(float) * 8 << " bit\n";
+    // вывод тип данных на экран
+    std::cout << "unsigned char takes " << sizeof(H) << " bytes. Min=" << +std::numeric_limits<unsigned char>::min()
+        << " Max=" << +std::numeric_limits<unsigned char>::max() << std::endl;
+
+    std::cout << "unsigned short takes " << sizeof(A) << " bytes. Min=" << std::numeric_limits<unsigned short>::min()
+        << " Max=" << std::numeric_limits<unsigned short>::max() << std::endl;
+
+    std::cout << "float takes " << sizeof(S) << " bytes. Min=" << FLT_MIN
+        << " Max=" << FLT_MAX << std::endl;
 
     // Вычисление результата
     S = (A + B) * H / 2.0f;
