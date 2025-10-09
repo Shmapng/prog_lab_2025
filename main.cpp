@@ -1,22 +1,29 @@
-#include <iostream>   // библиотека для ввода и вывода
+#include <iostream>
 
-int main() {          // начало
-    unsigned char H;         // для высоты (1..255)
-    unsigned short A, B;     // для оснований (1..1000)
-    unsigned int S;          // для площади
+int main() {
+    // unsigned char для высоты (1..255)
+    unsigned char H;
+    // unsigned short для оснований (1..1000)
+    unsigned short A;
+    unsigned short B;
+    // float для площади
+    float S;
 
-    std::cout << "H: ";    // вводим число с клавиатуры
-    std::cin >> H;         // сразу читаем напрямую в H
+    std::cout << "H: ";
+    std::cin >> H;
+    std::cout << "A: ";
+    std::cin >> A;
+    std::cout << "B: ";
+    std::cin >> B;
 
-    std::cout << "A: ";    // вводим число с клавиатуры
-    std::cin >> A;         // сразу читаем напрямую в A
+    // Вывод названий типов и их размерности в битах
+    std::cout << "\nTip: unsigned char, razmer: " << sizeof(unsigned char) * 8 << " bit\n";
+    std::cout << "Tip: unsigned short, razmer: " << sizeof(unsigned short) * 8 << " bit\n";
+    std::cout << "Tip: float, razmer: " << sizeof(float) * 8 << " bit\n";
 
-    std::cout << "B: ";    // вводим число с клавиатуры
-    std::cin >> B;         // сразу читаем напрямую в B
-
-    S = ((A + B) * H) / 2;    // формула площади
-
-    std::cout << "S:" << S << std::endl;   // выводим значение площади
+    // Вычисление результата
+    S = (A + B) * H / 2.0f;
+    std::cout << "\nRezultat (Tip float): " << S << std::endl;
 
     return 0;
 }
