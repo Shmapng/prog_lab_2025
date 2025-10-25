@@ -42,41 +42,41 @@ int main() {
     const int stolb = 4;
     int matrix[strok][stolb];
 
-    std::cout << "Vvedite 12 chisel(Matrix):\n";
-    for(int i = 0; i < strok; ++i) {
-        for(int j = 0; j < stolb; ++j) {
+    std::cout << "Vwedite 12 chisel(Matrix):\n";
+    for (int i = 0; i < strok; ++i) {
+        for (int j = 0; j < stolb; ++j) {
             std::cin >> matrix[i][j];
         }
     }
 
-    
-    int max_сol_otric = 0;
-    int max_col_indx = 0;
-    for(int j = 0; j < stolb; ++j) {
+    int max_col_otric = -1; 
+    int max_col_index = -1; 
+    for (int j = 0; j < stolb; ++j) {
         int cnt = 0;
-        for(int i = 0; i < strok; ++i) {
-            if(matrix[i][j] < 0) {
-                ++cnt;
+        for (int i = 0; i < strok; ++i) {
+            if (matrix[i][j] < 0) {
+                cnt++;
             }
         }
-        if(cnt > max_сol_otric) {
-            max_сol_otric = cnt;
-            max_col_indx = j;
+        if (cnt > max_col_otric) {
+            max_col_otric = cnt;
+            max_col_index = j;
         }
     }
 
     
-    for(int i = 0; i < strok; ++i) {
-        matrix[i][max_col_indx] = -1;
+    if (max_col_index != -1) {
+        for (int i = 0; i < strok; ++i) {
+            matrix[i][max_col_index] = -1;
+        }
     }
 
     std::cout << "Matrix posle zamene:\n";
-    for(int i = 0; i < strok; ++i) {
-        for(int j = 0; j < stolb; ++j) {
+    for (int i = 0; i < strok; ++i) {
+        for (int j = 0; j < stolb; ++j) {
             std::cout << matrix[i][j] << " ";
         }
         std::cout << std::endl;
     }
 
     return 0;
-}
