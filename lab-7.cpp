@@ -3,9 +3,6 @@
 #include <array>
 #include <ctime>
 
-// ================= ФУНКЦИИ ДЛЯ РАБОТЫ С МАССИВАМИ =================
-
-// Заполнить массив случайными числами
 void Zapolnit(std::array<int, 10>& mas)
 {
     const size_t RAZMER = 10;
@@ -22,7 +19,7 @@ void Zapolnit(std::array<int, 10>& mas)
     std::cout << "\b]" << std::endl;
 }
 
-// Вывести массив на экран
+
 void Vivesti(std::array<int, 10> mas)
 {
     std::cout << "[";
@@ -33,7 +30,6 @@ void Vivesti(std::array<int, 10> mas)
     std::cout << "\b]" << std::endl;
 }
 
-// Сортировка по значению (копия)
 void SortKop(std::array<int, 10> mas)
 {
     for (size_t i = 0; i < mas.size() - 1; ++i)
@@ -50,7 +46,6 @@ void SortKop(std::array<int, 10> mas)
     Vivesti(mas);
 }
 
-// Сортировка по ссылке (оригинал)
 void SortSsil(std::array<int, 10>& mas)
 {
     for (size_t i = 0; i < mas.size() - 1; ++i)
@@ -80,7 +75,6 @@ void SortSsil(std::array<int, 10>& mas)
     Vivesti(mas);
 }
 
-// Сортировка по указателю (оригинал)
 void SortUkaz(std::array<int, 10>* mas)
 {
     for (int i = 0; i < (*mas).size() - 1; ++i)
@@ -110,9 +104,6 @@ void SortUkaz(std::array<int, 10>* mas)
     Vivesti((*mas));
 }
 
-// ================= ФУНКЦИИ ДЛЯ ДИНАМИЧЕСКОГО МАССИВА =================
-
-// Вывести динамический массив
 void VivestiDin(std::vector<int>& mas)
 {
     std::cout << "[";
@@ -127,25 +118,21 @@ void VivestiDin(std::vector<int>& mas)
     std::cout << "]";
 }
 
-// Добавить элемент в начало
 void DobNach(std::vector<int>& mas, int num)
 {
     mas.insert(mas.begin(), num);
 }
 
-// Добавить элемент в конец
 void DobKon(std::vector<int>& mas, int num)
 {
     mas.push_back(num);
 }
 
-// Очистить массив
 void Ochistit(std::vector<int>& mas)
 {
     mas.clear();
 }
 
-// Найти элемент в массиве
 void NaitiEl(std::vector<int>& mas, int num)
 {
     bool naideno = false;
@@ -165,7 +152,6 @@ void NaitiEl(std::vector<int>& mas, int num)
     std::cout << "]" << std::endl;
 }
 
-// Задание по варианту
 void Zadanie(std::vector<int> mas)
 {
     std::cout << "Do: " << std::endl;
@@ -174,7 +160,6 @@ void Zadanie(std::vector<int> mas)
 
     if (mas.size() % 2 == 0)
     {
-        // Если четное - удалить первый элемент
         if (!mas.empty())
         {
             std::vector<int> temp;
@@ -187,7 +172,6 @@ void Zadanie(std::vector<int> mas)
     }
     else
     {
-        // Если нечетное - удалить до 4 последних
         if (mas.size() > 4)
         {
             std::vector<int> temp;
@@ -203,14 +187,12 @@ void Zadanie(std::vector<int> mas)
     VivestiDin(mas);
 }
 
-// ================= ОСНОВНАЯ ПРОГРАММА =================
-
 int main()
 {
-    std::array<int, 10> masFix;    // Фиксированный массив
-    std::vector<int> masDin;       // Динамический массив
-    int vybor;                     // Выбор пользователя
-    int num;                       // Число для операций
+    std::array<int, 10> masFix;    
+    std::vector<int> masDin;       
+    int vybor;                     
+    int num;                       
 
     do
     {
