@@ -101,7 +101,7 @@ int main() {
     Avtomobil mashina1;
     mashina1.pokazatInfo();
 
-    Avtomobil mashina2("Toyota", "Camry", "JTDKB20U103012345", "A123BC", 150000);
+    Avtomobil mashina2("BMW", "F90", "WBA8E9C58JCL12345", "X777XX", 45000);
     mashina2.pokazatInfo();
 
     Avtomobil mashina3(mashina2);
@@ -116,7 +116,7 @@ int main() {
 
 
     mashina2.pokazatInfo();
-    mashina2.umenshitProbeg(50000);
+    mashina2.umenshitProbeg(15000);
     cout << "Tekushchii probeg: " << mashina2.poluchitProbeg() << " km" << endl;
 
     return 0;
