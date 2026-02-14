@@ -18,17 +18,17 @@ int main() {
     cout << "\n=== Mashina 2 ===";
     mashina2.pokazatInfo();
 
-    // Оп +
+
     Avtomobil rezultatPlus = mashina1 + mashina2;
     cout << "\n=== Rezultat '+' ===";
     rezultatPlus.pokazatInfo();
 
-    // Оп -
+
     Avtomobil rezultatMinus = mashina1 - mashina2;
     cout << "\n=== Rezultat '-' ===";
     rezultatMinus.pokazatInfo();
 
-    //  Оп /
+
     Avtomobil rezultatDelenie = mashina1 / mashina2;
     cout << "\n=== Rezultat '/' ===";
     rezultatDelenie.pokazatInfo();
