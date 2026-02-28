@@ -6,10 +6,10 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 #include "AutoService.hpp"
 
 using namespace std;
-
 
 struct Magnitola;
 
@@ -25,15 +25,10 @@ protected:
     vector<string> veshchiVBagazhnike;
 
 public:
-
     Avtomobil();
     Avtomobil(const Avtomobil& kopiya);
     Avtomobil(string m, string mdl, string nk, string gn, int pr, vector<string> veshchi);
-    
-
     ~Avtomobil();
-    
-
     Avtomobil& operator=(const Avtomobil& other);
     
     string poluchitMarku() const;
