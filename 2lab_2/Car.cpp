@@ -1,16 +1,15 @@
 #include "Car.hpp"
 
-
 static bool seed_initialized = false;
 
 Avtomobil::Avtomobil() {
-    marka = "Neizvestno";
-    model = "Neizvestno";
-    nomer_kuzova = "Neizvestno";
-    gos_nomer = "A000AA";
+    marka = "neizvestno";
+    model = "neizvestno";
+    nomer_kuzova = "neizvestno";
+    gos_nomer = "a000aa";
     probeg = 0;
     veshchiVBagazhnike.clear();
-    magnitola = nullptr; 
+    magnitola = nullptr;
 }
 
 Avtomobil::Avtomobil(const Avtomobil& kopiya) {
@@ -21,7 +20,6 @@ Avtomobil::Avtomobil(const Avtomobil& kopiya) {
     probeg = kopiya.probeg;
     veshchiVBagazhnike = kopiya.veshchiVBagazhnike;
     
-
     if (kopiya.magnitola != nullptr) {
         magnitola = new Magnitola(*kopiya.magnitola);
     } else {
@@ -41,12 +39,11 @@ Avtomobil::Avtomobil(string m, string mdl, string nk, string gn, int pr, vector<
 
 Avtomobil::~Avtomobil() {
     veshchiVBagazhnike.clear();
-
     if (magnitola != nullptr) {
         delete magnitola;
         magnitola = nullptr;
     }
-    cout << "Objekt " << marka << " " << model << " udalen (vector ochishchen, magnitola udalena)" << endl;
+    cout << "avtomobil " << marka << " " << model << " udalen" << endl;
 }
 
 Avtomobil& Avtomobil::operator=(const Avtomobil& other) {
@@ -60,20 +57,17 @@ Avtomobil& Avtomobil::operator=(const Avtomobil& other) {
     probeg = other.probeg;
     veshchiVBagazhnike = other.veshchiVBagazhnike;
     
-
     if (magnitola != nullptr) {
         delete magnitola;
         magnitola = nullptr;
     }
     
-
     if (other.magnitola != nullptr) {
         magnitola = new Magnitola(*other.magnitola);
     }
 
     return *this;
 }
-
 
 string Avtomobil::poluchitMarku() const { return marka; }
 string Avtomobil::poluchitModel() const { return model; }
@@ -83,12 +77,11 @@ int Avtomobil::poluchitProbeg() const { return probeg; }
 vector<string> Avtomobil::poluchitVeshi() const { return veshchiVBagazhnike; }
 Magnitola* Avtomobil::poluchitMagnitolu() const { return magnitola; }
 
-
 void Avtomobil::ustanovitNomerKuzova(string nk) {
     if (nk.length() >= 3)
         nomer_kuzova = nk;
     else
-        nomer_kuzova = "Nekorrektnyi";
+        nomer_kuzova = "necorrektno";
 }
 
 void Avtomobil::ustanovitGosNomer(string gn) {
@@ -101,7 +94,7 @@ void Avtomobil::ustanovitGosNomer(string gn) {
         isalpha(gn[5]))
         gos_nomer = gn;
     else
-        gos_nomer = "A000AA";
+        gos_nomer = "a000aa";
 }
 
 void Avtomobil::ustanovitProbeg(int pr) {
@@ -116,12 +109,10 @@ void Avtomobil::ustanovitVeshi(const vector<string>& novyeVeshchi) {
 }
 
 void Avtomobil::ustanovitMagnitolu(Magnitola* novaMagnitola) {
-
     if (magnitola != nullptr) {
         delete magnitola;
     }
     
-
     if (novaMagnitola != nullptr) {
         magnitola = new Magnitola(*novaMagnitola);
     } else {
@@ -130,15 +121,15 @@ void Avtomobil::ustanovitMagnitolu(Magnitola* novaMagnitola) {
 }
 
 void Avtomobil::pokazatInfo() const {
-    cout << "\n=== Avtomobil ===" << endl;
-    cout << "Marka: " << marka << endl;
-    cout << "Model: " << model << endl;
-    cout << "Kuzov: " << nomer_kuzova << endl;
-    cout << "Gos nomer: " << gos_nomer << endl;
-    cout << "Probeg: " << probeg << " km" << endl;
-    cout << "Veshi v bagazhnike: ";
+    cout << "\navtomobil" << endl;
+    cout << "marka: " << marka << endl;
+    cout << "model: " << model << endl;
+    cout << "kuzov: " << nomer_kuzova << endl;
+    cout << "gos nomer: " << gos_nomer << endl;
+    cout << "probeg: " << probeg << " km" << endl;
+    cout << "veshi: ";
     if (veshchiVBagazhnike.empty())
-        cout << "(pusto)";
+        cout << "pusto";
     else {
         for (size_t i = 0; i < veshchiVBagazhnike.size(); ++i) {
             cout << veshchiVBagazhnike[i];
@@ -148,11 +139,9 @@ void Avtomobil::pokazatInfo() const {
     }
     cout << endl;
     
-    cout << "Magnitola: ";
     if (magnitola == nullptr) {
-        cout << "ne ustanovlena" << endl;
+        cout << "magnitola: net" << endl;
     } else {
-        cout << endl;
         magnitola->pokazatInfo();
     }
 }
@@ -161,7 +150,7 @@ void Avtomobil::umenshitProbeg(int skolko) {
     if (skolko > 0) {
         probeg = probeg - skolko;
         if (probeg < 0) probeg = 0;
-        cout << "Probeg umenshen na " << skolko << " km" << endl;
+        cout << "probeg umenshen na " << skolko << " km" << endl;
     }
 }
 
@@ -171,23 +160,33 @@ string Avtomobil::generirovatRandomGosNomer() {
         seed_initialized = true;
     }
     string nomer = "";
-    nomer += 'A' + rand() % 26;
+    nomer += 'a' + rand() % 26;
     for (int i = 0; i < 3; ++i) {
         nomer += '0' + rand() % 10;
     }
-    nomer += 'A' + rand() % 26;
-    nomer += 'A' + rand() % 26;
+    nomer += 'a' + rand() % 26;
+    nomer += 'a' + rand() % 26;
     return nomer;
 }
 
+// оператор + с повторами рядом
 Avtomobil Avtomobil::operator+(const Avtomobil& other) const {
     string novayaMarka = (rand() % 2 == 0) ? this->marka : other.marka;
     string novyiGosNomer = generirovatRandomGosNomer();
     
-    vector<string> novyeVeshi = this->veshchiVBagazhnike;
-    novyeVeshi.insert(novyeVeshi.end(), other.veshchiVBagazhnike.begin(), other.veshchiVBagazhnike.end());
+    vector<string> result = this->veshchiVBagazhnike;
     
-    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, novyeVeshi);
+    for (const string& v : other.veshchiVBagazhnike) {
+        auto it = find(result.begin(), result.end(), v);
+        if (it != result.end()) {
+            result.insert(it + 1, v);
+        } else {
+            result.push_back(v);
+        }
+    }
+    
+    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, 
+                     novyiGosNomer, this->probeg, result);
 }
 
 Avtomobil Avtomobil::operator-(const Avtomobil& other) const {
@@ -222,7 +221,8 @@ Avtomobil Avtomobil::operator-(const Avtomobil& other) const {
         }
     }
     
-    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, unikalnye);
+    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, 
+                     novyiGosNomer, this->probeg, unikalnye);
 }
 
 Avtomobil Avtomobil::operator/(const Avtomobil& other) const {
@@ -246,5 +246,6 @@ Avtomobil Avtomobil::operator/(const Avtomobil& other) const {
         }
     }
     
-    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, obshie);
+    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, 
+                     novyiGosNomer, this->probeg, obshie);
 }
