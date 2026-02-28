@@ -1,4 +1,4 @@
-#include "Car.h"
+#include "Car.hpp"
 
 
 static bool seed_initialized = false;
@@ -10,6 +10,7 @@ Avtomobil::Avtomobil() {
     gos_nomer = "A000AA";
     probeg = 0;
     veshchiVBagazhnike.clear();
+    magnitola = nullptr; 
 }
 
 Avtomobil::Avtomobil(const Avtomobil& kopiya) {
@@ -19,6 +20,13 @@ Avtomobil::Avtomobil(const Avtomobil& kopiya) {
     gos_nomer = kopiya.gos_nomer;
     probeg = kopiya.probeg;
     veshchiVBagazhnike = kopiya.veshchiVBagazhnike;
+    
+
+    if (kopiya.magnitola != nullptr) {
+        magnitola = new Magnitola(*kopiya.magnitola);
+    } else {
+        magnitola = nullptr;
+    }
 }
 
 Avtomobil::Avtomobil(string m, string mdl, string nk, string gn, int pr, vector<string> veshchi) {
@@ -28,13 +36,17 @@ Avtomobil::Avtomobil(string m, string mdl, string nk, string gn, int pr, vector<
     ustanovitGosNomer(gn);
     ustanovitProbeg(pr);
     veshchiVBagazhnike = veshchi;
+    magnitola = nullptr;
 }
 
 Avtomobil::~Avtomobil() {
-
     veshchiVBagazhnike.clear();
 
-    cout << "Objekt " << marka << " " << model << " udalen (vector ochishchen)" << endl;
+    if (magnitola != nullptr) {
+        delete magnitola;
+        magnitola = nullptr;
+    }
+    cout << "Objekt " << marka << " " << model << " udalen (vector ochishchen, magnitola udalena)" << endl;
 }
 
 Avtomobil& Avtomobil::operator=(const Avtomobil& other) {
@@ -47,9 +59,21 @@ Avtomobil& Avtomobil::operator=(const Avtomobil& other) {
     gos_nomer = other.gos_nomer;
     probeg = other.probeg;
     veshchiVBagazhnike = other.veshchiVBagazhnike;
+    
+
+    if (magnitola != nullptr) {
+        delete magnitola;
+        magnitola = nullptr;
+    }
+    
+
+    if (other.magnitola != nullptr) {
+        magnitola = new Magnitola(*other.magnitola);
+    }
 
     return *this;
 }
+
 
 string Avtomobil::poluchitMarku() const { return marka; }
 string Avtomobil::poluchitModel() const { return model; }
@@ -57,6 +81,8 @@ string Avtomobil::poluchitNomerKuzova() const { return nomer_kuzova; }
 string Avtomobil::poluchitGosNomer() const { return gos_nomer; }
 int Avtomobil::poluchitProbeg() const { return probeg; }
 vector<string> Avtomobil::poluchitVeshi() const { return veshchiVBagazhnike; }
+Magnitola* Avtomobil::poluchitMagnitolu() const { return magnitola; }
+
 
 void Avtomobil::ustanovitNomerKuzova(string nk) {
     if (nk.length() >= 3)
@@ -89,6 +115,20 @@ void Avtomobil::ustanovitVeshi(const vector<string>& novyeVeshchi) {
     veshchiVBagazhnike = novyeVeshchi;
 }
 
+void Avtomobil::ustanovitMagnitolu(Magnitola* novaMagnitola) {
+
+    if (magnitola != nullptr) {
+        delete magnitola;
+    }
+    
+
+    if (novaMagnitola != nullptr) {
+        magnitola = new Magnitola(*novaMagnitola);
+    } else {
+        magnitola = nullptr;
+    }
+}
+
 void Avtomobil::pokazatInfo() const {
     cout << "\n=== Avtomobil ===" << endl;
     cout << "Marka: " << marka << endl;
@@ -107,6 +147,14 @@ void Avtomobil::pokazatInfo() const {
         }
     }
     cout << endl;
+    
+    cout << "Magnitola: ";
+    if (magnitola == nullptr) {
+        cout << "ne ustanovlena" << endl;
+    } else {
+        cout << endl;
+        magnitola->pokazatInfo();
+    }
 }
 
 void Avtomobil::umenshitProbeg(int skolko) {
@@ -123,7 +171,6 @@ string Avtomobil::generirovatRandomGosNomer() {
         seed_initialized = true;
     }
     string nomer = "";
-
     nomer += 'A' + rand() % 26;
     for (int i = 0; i < 3; ++i) {
         nomer += '0' + rand() % 10;
@@ -134,32 +181,21 @@ string Avtomobil::generirovatRandomGosNomer() {
 }
 
 Avtomobil Avtomobil::operator+(const Avtomobil& other) const {
-
     string novayaMarka = (rand() % 2 == 0) ? this->marka : other.marka;
-
-
     string novyiGosNomer = generirovatRandomGosNomer();
-
-
+    
     vector<string> novyeVeshi = this->veshchiVBagazhnike;
     novyeVeshi.insert(novyeVeshi.end(), other.veshchiVBagazhnike.begin(), other.veshchiVBagazhnike.end());
-
-
-    string novayaModel = this->model;
-    string novyiKuzov = this->nomer_kuzova;
-    int novyiProbeg = this->probeg;
-
-    return Avtomobil(novayaMarka, novayaModel, novyiKuzov, novyiGosNomer, novyiProbeg, novyeVeshi);
+    
+    return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, novyeVeshi);
 }
 
 Avtomobil Avtomobil::operator-(const Avtomobil& other) const {
-
     string novayaMarka = (rand() % 2 == 0) ? this->marka : other.marka;
     string novyiGosNomer = generirovatRandomGosNomer();
-
-
+    
     vector<string> unikalnye;
-
+    
     for (const string& v : this->veshchiVBagazhnike) {
         bool found = false;
         for (const string& ov : other.veshchiVBagazhnike) {
@@ -172,7 +208,7 @@ Avtomobil Avtomobil::operator-(const Avtomobil& other) const {
             unikalnye.push_back(v);
         }
     }
-
+    
     for (const string& ov : other.veshchiVBagazhnike) {
         bool found = false;
         for (const string& v : this->veshchiVBagazhnike) {
@@ -185,21 +221,18 @@ Avtomobil Avtomobil::operator-(const Avtomobil& other) const {
             unikalnye.push_back(ov);
         }
     }
-
+    
     return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, unikalnye);
 }
 
 Avtomobil Avtomobil::operator/(const Avtomobil& other) const {
-
     string novayaMarka = (rand() % 2 == 0) ? this->marka : other.marka;
     string novyiGosNomer = generirovatRandomGosNomer();
-
-
+    
     vector<string> obshie;
     for (const string& v : this->veshchiVBagazhnike) {
         for (const string& ov : other.veshchiVBagazhnike) {
             if (v == ov) {
-
                 bool already = false;
                 for (const string& ob : obshie) {
                     if (ob == v) {
@@ -212,6 +245,6 @@ Avtomobil Avtomobil::operator/(const Avtomobil& other) const {
             }
         }
     }
-
+    
     return Avtomobil(novayaMarka, this->model, this->nomer_kuzova, novyiGosNomer, this->probeg, obshie);
 }
