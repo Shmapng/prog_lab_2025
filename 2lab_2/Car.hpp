@@ -6,7 +6,6 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <algorithm>
 #include "AutoService.hpp"
 
 using namespace std;
