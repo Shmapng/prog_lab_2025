@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>520</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Банковские услуги</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="labelFIO">
+    <property name="geometry">
+     <rect><x>40</x><y>40</y><width>120</width><height>20</height></rect>
+    </property>
+    <property name="text">
+     <string>ФИО клиента</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditFIO">
+    <property name="geometry">
+     <rect><x>170</x><y>35</y><width>250</width><height>28</height></rect>
+    </property>
+    <property name="placeholderText">
+     <string>Иван Иванов или John Smith</string>
+    </property>
+   </widget>
+
+   <widget class="QLabel" name="labelDateTime">
+    <property name="geometry">
+     <rect><x>40</x><y>90</y><width>120</width><height>20</height></rect>
+    </property>
+    <property name="text">
+     <string>Дата и время</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditDateTime">
+    <property name="geometry">
+     <rect><x>170</x><y>85</y><width>120</width><height>28</height></rect>
+    </property>
+    <property name="placeholderText">
+     <string>дд.мм.гггг/чч:мм</string>
+    </property>
+   </widget>
+
+   <widget class="QLabel" name="labelCode">
+    <property name="geometry">
+     <rect><x>40</x><y>140</y><width>120</width><height>20</height></rect>
+    </property>
+    <property name="text">
+     <string>Код услуги</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCode">
+    <property name="geometry">
+     <rect><x>170</x><y>135</y><width>200</width><height>28</height></rect>
+    </property>
+    <property name="placeholderText">
+     <string>1-5[A-D] + 6-30[A-F]</string>
+    </property>
+   </widget>
+
+   <widget class="QLabel" name="labelServices">
+    <property name="geometry">
+     <rect><x>40</x><y>200</y><width>120</width><height>20</height></rect>
+    </property>
+    <property name="text">
+     <string>Услуги (необязательно)</string>
+    </property>
+   </widget>
+
+   <widget class="QCheckBox" name="checkCredit">
+    <property name="geometry">
+     <rect><x>170</x><y>195</y><width>120</width><height>25</height></rect>
+    </property>
+    <property name="text">
+     <string>Кредитование</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkDeposit">
+    <property name="geometry">
+     <rect><x>170</x><y>225</y><width>120</width><height>25</height></rect>
+    </property>
+    <property name="text">
+     <string>Вклад</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkInsurance">
+    <property name="geometry">
+     <rect><x>170</x><y>255</y><width>120</width><height>25</height></rect>
+    </property>
+    <property name="text">
+     <string>Страхование</string>
+    </property>
+   </widget>
+
+   <widget class="QPushButton" name="pushButtonReset">
+    <property name="geometry">
+     <rect><x>80</x><y>340</y><width>120</width><height>40</height></rect>
+    </property>
+    <property name="styleSheet">
+     <string>background-color: #f44336; color: black; border: 2px solid black;</string>
+    </property>
+    <property name="text">
+     <string>Сброс</string>
+    </property>
+   </widget>
+
+   <widget class="QPushButton" name="pushButtonSave">
+    <property name="geometry">
+     <rect><x>300</x><y>340</y><width>120</width><height>40</height></rect>
+    </property>
+    <property name="styleSheet">
+     <string>background-color: #55ff00; color: black; border: 2px solid black;</string>
+    </property>
+    <property name="text">
+     <string>Сохранить</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
