@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QDate>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
@@ -15,90 +17,177 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// Сброс всех полей
+// Сброс
 void MainWindow::on_pushButtonReset_clicked()
 {
-    ui->lineEditFIO->clear();
+    ui->lineEditFrom->clear();
+    ui->lineEditTo->clear();
     ui->lineEditDateTime->clear();
-    ui->lineEditCode->clear();
-    ui->checkCredit->setChecked(false);
-    ui->checkDeposit->setChecked(false);
-    ui->checkInsurance->setChecked(false);
+    ui->lineEditPlace->clear();
+
+    ui->radioYes->setChecked(false);
+    ui->radioNo->setChecked(false);
+
+    ui->checkFood->setChecked(false);
+    ui->checkTaxi->setChecked(false);
+    ui->checkVip->setChecked(false);
 }
 
-// Сохранение с проверками
+// Сохранение
 void MainWindow::on_pushButtonSave_clicked()
 {
-    QString fio = ui->lineEditFIO->text().trimmed();
+    QString from = ui->lineEditFrom->text().trimmed();
+    QString to = ui->lineEditTo->text().trimmed();
     QString dateTime = ui->lineEditDateTime->text().trimmed();
-    QString code = ui->lineEditCode->text().trimmed();
+    QString place = ui->lineEditPlace->text().trimmed();
 
-    // Проверка обязательности (все кроме услуг)
-    if (fio.isEmpty() || dateTime.isEmpty() || code.isEmpty()) {
-        QMessageBox::warning(this, "Ошибка", "Все поля, кроме услуг, обязательны для заполнения!");
+    // Проверка обязательности
+    if(from.isEmpty() ||
+        to.isEmpty() ||
+        dateTime.isEmpty() ||
+        place.isEmpty())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Все поля кроме услуг обязательны!");
+
         return;
     }
 
-    // 1. ФИО: анг+рус, каждое слово с заглавной буквы
-    QRegularExpression regFIO(
-        "^([A-ZА-ЯЁ][a-zа-яё]+)( [A-ZА-ЯЁ][a-zа-яё]+)*$"
-    );
-    if (!regFIO.match(fio).hasMatch()) {
-        QMessageBox::warning(this, "Ошибка",
-            "ФИО должно содержать только английские или русские буквы.\n"
-            "Каждое слово начинается с заглавной, остальные строчные.\n"
-            "Пример: Иван Иванов или John Smith");
+    // 1. Анг + рус, первая буква заглавная
+    QRegularExpression regCity(
+        "^([A-ZА-ЯЁ][a-zа-яё]+)"
+        "( [A-ZА-ЯЁ][a-zа-яё]+)*$"
+        );
+
+    if(!regCity.match(from).hasMatch())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Поле 'Откуда' заполнено неверно!");
+
         return;
     }
 
-    // 2. Дата и время: дд.мм.гггг/чч:мм
-    QRegularExpression regDateTime(
+    if(!regCity.match(to).hasMatch())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Поле 'Куда' заполнено неверно!");
+
+        return;
+    }
+
+    // 2. Дата и время
+    QRegularExpression regDate(
         "^(\\d{2})\\.(\\d{2})\\.(\\d{4})/(\\d{2}):(\\d{2})$"
-    );
-    QRegularExpressionMatch matchDT = regDateTime.match(dateTime);
-    if (!matchDT.hasMatch()) {
-        QMessageBox::warning(this, "Ошибка",
-            "Дата и время должны быть в формате: дд.мм.гггг/чч:мм\n"
-            "Пример: 15.04.2025/14:30");
+        );
+
+    QRegularExpressionMatch match =
+        regDate.match(dateTime);
+
+    if(!match.hasMatch())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Дата должна быть:\n"
+                             "дд.мм.гггг/чч:мм");
+
         return;
     }
-    // Дополнительная проверка корректности даты/времени
-    int day = matchDT.captured(1).toInt();
-    int month = matchDT.captured(2).toInt();
-    int year = matchDT.captured(3).toInt();
-    int hour = matchDT.captured(4).toInt();
-    int minute = matchDT.captured(5).toInt();
+
+    int day = match.captured(1).toInt();
+    int month = match.captured(2).toInt();
+    int year = match.captured(3).toInt();
+
+    int hour = match.captured(4).toInt();
+    int minute = match.captured(5).toInt();
 
     QDate date(year, month, day);
-    if (!date.isValid() || date.year() != year || date.month() != month || date.day() != day) {
-        QMessageBox::warning(this, "Ошибка", "Некорректная дата!");
-        return;
-    }
-    if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-        QMessageBox::warning(this, "Ошибка", "Некорректное время! Часы 0-23, минуты 0-59.");
+
+    if(!date.isValid())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Некорректная дата!");
+
         return;
     }
 
-    // 3. Код: 1-5 символов A-D, затем 6-30 символов A-F
-    QRegularExpression regCode("^[A-D]{1,5}[A-F]{6,30}$");
-    if (!regCode.match(code).hasMatch()) {
-        QMessageBox::warning(this, "Ошибка",
-            "Код услуги: сначала 1-5 заглавных букв A-D, затем 6-30 заглавных букв A-F.\n"
-            "Пример: ABDFFFFFF");
+    if(hour < 0 || hour > 23 ||
+        minute < 0 || minute > 59)
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Некорректное время!");
+
         return;
     }
 
-    // Сбор выбранных услуг (необязательные)
+    // 3. Место
+        QRegularExpression regPlace(
+            "^([1-5][A-D]|([6-9]|[1-2][0-9]|30)[A-F])$"
+            );
+
+
+
+    if(!regPlace.match(place).hasMatch())
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Место должно быть:\n"
+                             "1A-6F");
+
+        return;
+    }
+
+    // Багаж
+    QString baggage;
+
+    if(ui->radioYes->isChecked())
+        baggage = "Да";
+    else if(ui->radioNo->isChecked())
+        baggage = "Нет";
+    else
+    {
+        QMessageBox::warning(this,
+                             "Ошибка",
+                             "Выберите доп. багаж!");
+
+        return;
+    }
+
+    // Услуги
     QStringList services;
-    if (ui->checkCredit->isChecked())   services << "Кредитование";
-    if (ui->checkDeposit->isChecked())  services << "Вклад";
-    if (ui->checkInsurance->isChecked()) services << "Страхование";
 
-    // Создание объекта и сохранение
-    BankRequest request(fio, dateTime, code, services);
-    if (request.saveToFile("result.txt")) {
-        QMessageBox::information(this, "Успех", "Данные сохранены в result.txt");
-    } else {
-        QMessageBox::critical(this, "Ошибка", "Не удалось записать файл!");
+    if(ui->checkFood->isChecked())
+        services << "Питание";
+
+    if(ui->checkTaxi->isChecked())
+        services << "Такси";
+
+    if(ui->checkVip->isChecked())
+        services << "VIP зал";
+
+    // Создание объекта
+    Ticket ticket(from,
+                  to,
+                  dateTime,
+                  place,
+                  baggage,
+                  services);
+
+    // Сохранение
+    if(ticket.saveToFile("result.txt"))
+    {
+        QMessageBox::information(this,
+                                 "Успех",
+                                 "Данные сохранены!");
+    }
+    else
+    {
+        QMessageBox::critical(this,
+                              "Ошибка",
+                              "Ошибка записи файла!");
     }
 }
