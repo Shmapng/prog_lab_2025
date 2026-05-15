@@ -3,38 +3,62 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QStringList>
 #include <QFile>
 #include <QTextStream>
 
-// Класс для хранения данных заявки
-class BankRequest {
+class Ticket
+{
 public:
-    QString fio;
+    QString from;
+    QString to;
     QString dateTime;
-    QString code;
-    QStringList services;  // выбранные услуги
+    QString place;
+    QString baggage;
+    QStringList services;
 
-    BankRequest(QString f, QString dt, QString c, QStringList s)
-        : fio(f), dateTime(dt), code(c), services(s) {}
+    Ticket(QString f, QString t, QString dt,
+           QString p, QString b, QStringList s)
+        : from(f), to(t), dateTime(dt),
+        place(p), baggage(b), services(s) {}
 
-    bool saveToFile(const QString &filename) {
+    bool saveToFile(const QString &filename)
+    {
         QFile file(filename);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+
+        if(file.open(QIODevice::WriteOnly |
+                      QIODevice::Append |
+                      QIODevice::Text))
+        {
             QTextStream out(&file);
-            out << "ФИО клиента: " << fio << "\n";
+
+            out << "Откуда: " << from << "\n";
+            out << "Куда: " << to << "\n";
             out << "Дата и время: " << dateTime << "\n";
-            out << "Код услуги: " << code << "\n";
-            out << "Выбранные услуги: " << (services.isEmpty() ? "Нет" : services.join(", ")) << "\n";
-            out << "----------------------\n";
+            out << "Место: " << place << "\n";
+            out << "Доп. багаж: " << baggage << "\n";
+
+            out << "Услуги: ";
+
+            if(services.isEmpty())
+                out << "Нет";
+            else
+                out << services.join(", ");
+
+            out << "\n----------------------\n";
+
             file.close();
             return true;
         }
+
         return false;
     }
 };
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -47,6 +71,7 @@ public:
 
 private slots:
     void on_pushButtonReset_clicked();
+
     void on_pushButtonSave_clicked();
 
 private:
