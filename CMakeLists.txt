@@ -1,19 +1,33 @@
-cmake_minimum_required(VERSION 3.10)
-project(Lab3_AutoService)
+cmake_minimum_required(VERSION 3.19)
+project(2lab-6 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
-include_directories(include)
+qt_standard_project_setup()
 
-set(SOURCES
-    src/Car.cpp
-    src/AutoService.cpp
-    src/main.cpp
+qt_add_executable(2lab-6
+    WIN32 MACOSX_BUNDLE
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+target_link_libraries(2lab-6
+    PRIVATE
+        Qt::Core
+        Qt::Widgets
 )
+
+install(TARGETS 2lab-6
+    BUNDLE  DESTINATION .
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+qt_generate_deploy_app_script(
+    TARGET 2lab-6
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
