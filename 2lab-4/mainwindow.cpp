@@ -25,8 +25,14 @@ void MainWindow::on_pushButtonReset_clicked()
     ui->lineEditDateTime->clear();
     ui->lineEditPlace->clear();
 
+    ui->radioYes->setAutoExclusive(false);
+    ui->radioNo->setAutoExclusive(false);
+
     ui->radioYes->setChecked(false);
     ui->radioNo->setChecked(false);
+
+    ui->radioYes->setAutoExclusive(true);
+    ui->radioNo->setAutoExclusive(true);
 
     ui->checkFood->setChecked(false);
     ui->checkTaxi->setChecked(false);
@@ -190,4 +196,3 @@ void MainWindow::on_pushButtonSave_clicked()
                               "Ошибка",
                               "Ошибка записи файла!");
     }
-}
