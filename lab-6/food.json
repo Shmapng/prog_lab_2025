@@ -1,0 +1,30 @@
+[
+    {
+        "description": "пперони",
+        "hunger": 40,
+        "name": "пицца",
+        "price": 45,
+        "weight": 56
+    },
+    {
+        "description": "слатный",
+        "hunger": 450,
+        "name": "бурег",
+        "price": 455,
+        "weight": 65
+    },
+    {
+        "description": "Сырный",
+        "hunger": 50,
+        "name": "Бургер",
+        "price": 350,
+        "weight": 250
+    },
+    {
+        "description": "Сырный",
+        "hunger": 50,
+        "name": "Бургер",
+        "price": 350,
+        "weight": 250
+    }
+]
