@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QHeaderView>
 
 #include <QFileDialog>
 #include <QFile>
@@ -27,10 +28,22 @@ MainWindow::MainWindow(QWidget *parent)
         );
 
     ui->tableWidgetGood->horizontalHeader()
-        ->setStretchLastSection(true);
+        ->setSectionResizeMode(QHeaderView::Stretch);
 
     ui->tableWidgetBad->horizontalHeader()
-        ->setStretchLastSection(true);
+        ->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tableWidgetGood->horizontalHeader()
+        ->setSectionsMovable(false);
+
+    ui->tableWidgetBad->horizontalHeader()
+        ->setSectionsMovable(false);
+
+    ui->tableWidgetGood->setHorizontalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
+
+    ui->tableWidgetBad->setHorizontalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
 }
 
 MainWindow::~MainWindow()
