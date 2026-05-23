@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Новый обьект</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="centralwidget_2" native="true">
@@ -161,7 +161,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Сохранить json</string>
+      <string>Ок</string>
      </property>
     </widget>
    </widget>
